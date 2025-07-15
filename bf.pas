@@ -8,19 +8,21 @@ Pascal version developed by ajack (aka Adrian Chiang) on 30-Jul-2005.
 
 Questions or comments, please e-mail me at: ajack2001my [at] yahoo.com
 
-- Array is 30001 bytes in size.
-- Size of array is 1 byte.
+- Array is 30000 bytes in size.
 - Nested loops can be 65535 generations into the loop.
 - Code size of a brainfuck program is 8mb in size.
 
 Source code tested successfully with:
 
-  Virtual Pascal v2.1 (build 279)
-  Free Pascal 2.0.0
+  Free Pascal 3.2.2
 
+To know more about this esoteric language.
+
+  https://en.wikipedia.org/wiki/Brainfuck
+  
 Based on the brainfuck documentation found at:
 
-  http://cydathria.com
+  http://cydathria.com (DOWN)
 
 Brainfuck is a turing-complete programming language developed by
 Urban Mueller:
@@ -39,8 +41,8 @@ v1.01 - Change the BF_LoadProg from using ReadLn to BlockRead as the
         previous version could not load programs that are longer than
         255 characters on a single text line.
 v1.02 - Precomputes loop jump addresses for faster execution (Credit to Microsoft CoPilot)
-	  - Updated BF_LoadProg to load source in 64k chunks, instead of 8k chunks.
-	  - Expanded program code size to 8mb from 4mb.
+	  - Updated BF_LoadProg to load source in 64k chunks (from 8k chunks).
+	  - Expanded program code size to 8mb (from 4mb).
 	  - Changed build and copyright messaged based on ProgBuild.
       - Minor code cleanups.
 	  
@@ -223,15 +225,12 @@ BEGIN
         '-' : Dec (A[P]);
         '.' : _Print (A[P]);
         ',' : _GetKey (A[P]);
-        '[' : IF A[P] = 0 THEN
-                CNow := Jump[CNow]
-              ELSE
-                ; // continue
-        ']' : IF A[P] <> 0 THEN
-                CNow := Jump[CNow]
-              ELSE
-                ; // continue
-        '#' : IF Debug THEN _Debug;
+        '[' : IF A[P] = 0 THEN 
+		        CNow := Jump[CNow];
+        ']' : IF A[P] <> 0 THEN 
+		        CNow := Jump[CNow];
+        '#' : IF Debug THEN 
+		        _Debug;
       END;
       Inc (CNow);
     END;
